@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Trophel.iml" filepath="$PROJECT_DIR$/Trophel.iml" />
+      <module fileurl="file://D:\CPE\android\TrophelDrive\Trophel-1\Trophel.iml" filepath="D:\CPE\android\TrophelDrive\Trophel-1\Trophel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Trophel-1.iml" filepath="$PROJECT_DIR$/.idea/Trophel-1.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
