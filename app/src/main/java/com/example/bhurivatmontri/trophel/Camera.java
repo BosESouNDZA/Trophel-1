@@ -12,6 +12,8 @@ import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.example.bhurivatmontri.trophel.adapter.GridAdapter;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
@@ -100,8 +102,12 @@ public class Camera extends Activity implements CameraBridgeViewBase.CvCameraVie
         //InputStream test1 = assetManager.open("zzz.jpeg");
         // InputStream test2 = assetManager.open("ccc.jpeg");
         //InputStream test1 = getResources().get(R.drawable.zzz);
-        Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.zzz);
-        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.ccc);
+        if(GridAdapter.class.getName() == "")
+        {
+
+        }
+        Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.test1);
+        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.test2);
         Utils.bitmapToMat(bitmap1, img1);
         Utils.bitmapToMat(bitmap2, img2);
 //        Size sz = new Size(1024,768);
@@ -179,8 +185,8 @@ public class Camera extends Activity implements CameraBridgeViewBase.CvCameraVie
     }
 
     public Mat recognize(Mat aInputFrame) {
-        // Imgproc.cvtColor(aInputFrame, aInputFrame, Imgproc.COLOR_RGB2GRAY);
-        // -- Step 1: Detect the keypoints using Detector
+//         Imgproc.cvtColor(aInputFrame, aInputFrame, Imgproc.COLOR_RGB2GRAY);
+//        // -- Step 1: Detect the keypoints using Detector
 //        descriptors2 = new Mat();
 //        keypoints2 = new MatOfKeyPoint();
 //        detector.detect(aInputFrame, keypoints2);
