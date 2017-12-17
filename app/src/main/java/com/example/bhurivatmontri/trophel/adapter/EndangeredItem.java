@@ -1,5 +1,8 @@
 package com.example.bhurivatmontri.trophel.adapter;
 
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+
 /**
  * Created by Bhurivat Montri on 10/20/2017.
  */
@@ -23,4 +26,5 @@ public class EndangeredItem {
     public void setThumbnail(int thumbnail) {
         this.mThumbnail = thumbnail;
     }
+
 }

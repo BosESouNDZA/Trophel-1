@@ -36,12 +36,16 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.storage.StorageReference;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
@@ -53,6 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.graphics.PorterDuff.Mode.SRC_IN;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Home extends AppCompatActivity {
 
@@ -90,16 +95,16 @@ public class Home extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
-                    case 0 :
+                    case 0:
                         getSupportActionBar().setTitle("Attraction");
                         break;
-                    case 1 :
+                    case 1:
                         getSupportActionBar().setTitle("Map");
                         break;
-                    case 2 :
+                    case 2:
                         getSupportActionBar().setTitle("Friend");
                         break;
-                    case 3 :
+                    case 3:
                         getSupportActionBar().setTitle("Profile");
                         break;
                     default:
@@ -122,13 +127,17 @@ public class Home extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        for (UserInfo profile : user.getProviderData()) {
+            String name = profile.getDisplayName().toString();
+            String email = profile.getEmail();
         headerNavigationLeft = new AccountHeader().withActivity(this).withCompactStyle(false)
-                .withSavedInstance(savedInstanceState).withHeaderBackground(R.color.CyanA700)
+                .withSavedInstance(savedInstanceState).withHeaderBackground(R.drawable.background)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Bhurivat Montri").withEmail("bhurivat.m@gmail.com")
-                        .withIcon(getResources().getDrawable(R.drawable.profile_bhurivat_montri))
+                        new ProfileDrawerItem().withName(name).withEmail(email)
+                                .withIcon(getResources().getDrawable(R.drawable.profile_thatchapon_wongsrii))
                 ).build();
+        }
         navigationDrawerLeft = new Drawer().withActivity(this).withToolbar(toolbar)
                 .withDisplayBelowToolbar(false).withActionBarDrawerToggleAnimated(true)
                 .withDrawerGravity(Gravity.LEFT).withSavedInstance(savedInstanceState)

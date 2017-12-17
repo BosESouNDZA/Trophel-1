@@ -41,13 +41,10 @@ public class Attraction extends Fragment {
         View view = inflater.inflate(R.layout.fragment_attraction, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_Attraction);
         mRecyclerView.setHasFixedSize(true);
-
         mLayoutManager  = new GridLayoutManager(getActivity(),1);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         mAdapter = new GridAdapter();
         mRecyclerView.setAdapter(mAdapter);
-
         return view ;
     }
 

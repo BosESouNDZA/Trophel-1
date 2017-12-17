@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,60 +6,302 @@
     android:background="@color/White"
     tools:context="com.example.bhurivatmontri.trophel.fragment.Profile">
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-           <ImageView
-               android:id="@+id/cover_background"
-               android:layout_width="400dp"
-               android:layout_height="200dp"
-               android:scaleType="centerCrop"
-               android:src="@drawable/cover_bhurivat_montri" />
+            <ImageView
+                android:id="@+id/cover_background"
+                android:layout_width="400dp"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop" />
 
-           <de.hdodenhof.circleimageview.CircleImageView
-               android:id="@+id/img_Profile"
-               android:layout_width="80dp"
-               android:layout_height="80dp"
-               app:civ_border_width="2dp"
-               app:civ_border_color="#FFFFFF"
-               android:layout_below="@+id/cover_background"
-               android:layout_centerHorizontal="true"
-               android:layout_marginTop="-60dp" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_Profile"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FFFFFF"
+                android:layout_below="@+id/cover_background"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-60dp" />
 
-       </RelativeLayout>
+        </RelativeLayout>
 
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:id="@+id/name_Profile"
-               android:textColor="@color/Black"
-               android:textSize="20dp"
-               android:textStyle="bold"
-               android:layout_centerHorizontal="true"
-               android:layout_marginTop="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name_Profile"
+                android:textColor="@color/Black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="xxxx xxxx"/>
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textColor="@color/colorPrimaryDark"
-               android:textSize="15dp"
-               android:textStyle="italic"
-               android:id="@+id/login_email"
-               android:layout_centerHorizontal="true"
-               android:layout_below="@+id/name_Profile"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/caption_Profile"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15dp"
+                android:textStyle="italic"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/name_Profile"
+                android:text="( ---- )"/>
 
-       </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/id_Profile"
+                android:textColor="@color/Cyan500"
+                android:textSize="15dp"
+                android:textStyle="italic"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/caption_Profile"
+                android:text="id:"/>
 
-   </LinearLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/star_layout1"
+                android:layout_below="@+id/id_Profile"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true">
 
-</ScrollView>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/star_Profile"
+                    android:src="@drawable/star_success"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/star_count"
+                    android:layout_toRightOf="@+id/star_Profile"
+                    android:textSize="20dp"
+                    android:text=" : 0"
+                    android:textColor="@color/Cyan900"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/trophel_layout1"
+                android:layout_below="@+id/star_layout1"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/trophel_northern_Profile"
+                    android:src="@drawable/trophel_northern"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/trophel_northern_count"
+                    android:layout_toRightOf="@+id/trophel_northern_Profile"
+                    android:textSize="20dp"
+                    android:text=" : 0"
+                    android:textColor="@color/Cyan900"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@id/trophel_northern_count"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/trophel_central_Profile"
+                    android:src="@drawable/trophel_central"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/trophel_central_count"
+                    android:layout_toRightOf="@+id/trophel_central_Profile"
+                    android:textSize="20dp"
+                    android:text=" : 0"
+                    android:textColor="@color/Cyan900"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@id/trophel_central_count"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/trophel_northeastern_Profile"
+                    android:src="@drawable/trophel_northeastern"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/trophel_northeastern_count"
+                    android:layout_toRightOf="@+id/trophel_northeastern_Profile"
+                    android:textSize="20dp"
+                    android:text=" : 0"
+                    android:textColor="@color/Cyan900"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/trophel_layout2"
+                android:layout_below="@+id/trophel_layout1"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/trophel_western_Profile"
+                    android:src="@drawable/trophel_western"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/trophel_western_count"
+                    android:layout_toRightOf="@+id/trophel_western_Profile"
+                    android:textSize="20dp"
+                    android:text=" : 0"
+                    android:textColor="@color/Cyan900"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@id/trophel_western_count"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/trophel_southern_Profile"
+                    android:src="@drawable/trophel_southern"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/trophel_southern_count"
+                    android:layout_toRightOf="@+id/trophel_southern_Profile"
+                    android:textSize="20dp"
+                    android:text=" : 0"
+                    android:textColor="@color/Cyan900"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@id/trophel_southern_count"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/trophel_eastern_Profile"
+                    android:src="@drawable/trophel_eastern"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/trophel_eastern_count"
+                    android:layout_toRightOf="@+id/trophel_eastern_Profile"
+                    android:textSize="20dp"
+                    android:text=" : 0"
+                    android:textColor="@color/Cyan900"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/trophel_layout2"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/detail_count"
+                android:textSize="20dp"
+                android:text="Discovery"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/trophel_layout3"
+                android:layout_below="@+id/detail_count"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true">
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button_northern"
+                    android:backgroundTint="@color/md_blue_700"
+                    android:textSize="10dp"
+                    android:text="Northern"/>
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/button_northern"
+                    android:id="@+id/button_central"
+                    android:backgroundTint="@color/md_blue_700"
+                    android:textSize="10dp"
+                    android:text="Central"/>
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/button_central"
+                    android:id="@+id/button_northeastern"
+                    android:backgroundTint="@color/md_blue_700"
+                    android:textSize="10dp"
+                    android:text="Norteastern"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/trophel_layout4"
+                android:layout_below="@+id/trophel_layout3"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true">
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button_western"
+                    android:backgroundTint="@color/md_blue_700"
+                    android:textSize="10dp"
+                    android:text="Western"/>
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/button_western"
+                    android:id="@+id/button_southern"
+                    android:textColor="@color/White"
+                    android:backgroundTint="@color/md_blue_700"
+                    android:textSize="10dp"
+                    android:text="Southern"/>
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/button_southern"
+                    android:id="@+id/button_eastern"
+                    android:backgroundTint="@color/md_blue_700"
+                    android:textSize="10dp"
+                    android:text="Eastern"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"></LinearLayout>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
