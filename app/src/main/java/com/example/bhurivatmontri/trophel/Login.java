@@ -80,7 +80,7 @@ public class Login extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_btnFacebook);
-        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.setReadPermissions("email","public_profile");
         // Other app specific specialization
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
