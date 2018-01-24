@@ -277,5 +277,6 @@ public class Camera extends Activity implements CameraBridgeViewBase.CvCameraVie
 
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         return recognize(inputFrame.rgba());
+        //return inputFrame.rgba();
     }
 }
