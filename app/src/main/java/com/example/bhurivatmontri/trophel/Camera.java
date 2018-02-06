@@ -6,7 +6,6 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -37,6 +36,7 @@ import org.opencv.features2d.Features2d;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -58,7 +58,7 @@ public class Camera extends Activity implements CameraBridgeViewBase.CvCameraVie
     DescriptorExtractor descriptor;
     DescriptorMatcher matcher;
     Mat descriptors2,descriptors1,descriptors3;
-    Mat img1,img2;
+    Mat img1,img2,toresize1,toresize2;
     MatOfKeyPoint keypoints1,keypoints2,keypoints3;
     Context context;
 
@@ -98,21 +98,21 @@ public class Camera extends Activity implements CameraBridgeViewBase.CvCameraVie
         matcher = DescriptorMatcher.create(DescriptorMatcher.BRUTEFORCE_HAMMING);
         img1 = new Mat();
         img2 = new Mat();
-        AssetManager assetManager = getAssets();
-        //InputStream test1 = assetManager.open("zzz.jpeg");
-        // InputStream test2 = assetManager.open("ccc.jpeg");
-        //InputStream test1 = getResources().get(R.drawable.zzz);
         if(GridAdapter.class.getName() == "")
         {
 
         }
-        Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.test1);
-        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.test2);
-        Utils.bitmapToMat(bitmap1, img1);
+        AssetManager assetManager = getAssets();
+        InputStream istr = assetManager.open("temple02_1.jpg");
+        Bitmap bitmap = BitmapFactory.decodeStream(istr);
+        Utils.bitmapToMat(bitmap, img1);
+        //Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.threekings_1);
+        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.threekings_2);
+        //Utils.bitmapToMat(bitmap1, img1);
         Utils.bitmapToMat(bitmap2, img2);
-//        Size sz = new Size(1024,768);
-//        Imgproc.resize( img1, img1, sz );
-//        Imgproc.resize( img2, img2, sz );
+        Size sz = new Size(1024,768);
+        Imgproc.resize( img1, img1, sz );
+        Imgproc.resize( img2, img2, sz );
         Imgproc.cvtColor(img1, img1, Imgproc.COLOR_RGB2GRAY);
         img1.convertTo(img1, 0); //converting the image to match with the type of the cameras image
         descriptors1 = new Mat();
@@ -185,27 +185,25 @@ public class Camera extends Activity implements CameraBridgeViewBase.CvCameraVie
     }
 
     public Mat recognize(Mat aInputFrame) {
-//         Imgproc.cvtColor(aInputFrame, aInputFrame, Imgproc.COLOR_RGB2GRAY);
-//        // -- Step 1: Detect the keypoints using Detector
-//        descriptors2 = new Mat();
-//        keypoints2 = new MatOfKeyPoint();
-//        detector.detect(aInputFrame, keypoints2);
-//
-//
-//        // -- Step 2: Calculate descriptors (feature vectors)
-//        descriptor.compute(aInputFrame, keypoints2, descriptors2);
+        Imgproc.cvtColor(aInputFrame, aInputFrame, Imgproc.COLOR_RGB2GRAY);
+        // -- Step 1: Detect the keypoints using Detector
+        descriptors2 = new Mat();
+        keypoints2 = new MatOfKeyPoint();
+        detector.detect(aInputFrame, keypoints2);
+
+        // -- Step 2: Calculate descriptors (feature vectors)
+        descriptor.compute(aInputFrame, keypoints2, descriptors2);
 
 
         // -- Step 3: Matching descriptor vectors using matcher
        // MatOfDMatch matches = new MatOfDMatch();
 
         List<MatOfDMatch> matches = new ArrayList<MatOfDMatch>();
-        matcher.knnMatch(descriptors1, descriptors3, matches, 5);
-//        if (img1.type() == img2.type()) {
-//            matcher.match(descriptors1, descriptors3 ,matches);
-//        } else {
-//            return aInputFrame;
-//        }
+        if(aInputFrame.type() == img1.type() && !descriptors2.empty() && !keypoints2.empty())
+            matcher.knnMatch(descriptors1, descriptors2, matches, 5);
+        else
+            return aInputFrame;
+
 //        List<DMatch> matchesList = matches.toList();
 //
 //        Double max_dist = 0.0;
@@ -226,57 +224,56 @@ public class Camera extends Activity implements CameraBridgeViewBase.CvCameraVie
 //
 //        MatOfDMatch goodMatches = new MatOfDMatch();
 //        goodMatches.fromList(good_matches);
-        Mat outputImg = new Mat();
-        MatOfByte drawnMatches = new MatOfByte();
+            Mat outputImg = new Mat();
+            MatOfByte drawnMatches = new MatOfByte();
 //        if (aInputFrame.empty() || aInputFrame.cols() < 1 || aInputFrame.rows() < 1) {
 //            return aInputFrame;
 //        }
-        //--------------------------------------------------
-        // ratio test
-        LinkedList<DMatch> good_matches = new LinkedList<>();
-        for (Iterator<MatOfDMatch> iterator = matches.iterator(); iterator.hasNext();) {
-            MatOfDMatch matOfDMatch = (MatOfDMatch) iterator.next();
-            if (matOfDMatch.toArray()[0].distance / matOfDMatch.toArray()[1].distance < 0.9) {
-                good_matches.add(matOfDMatch.toArray()[0]);
+            //--------------------------------------------------
+            // ratio test
+            LinkedList<DMatch> good_matches = new LinkedList<>();
+            for (Iterator<MatOfDMatch> iterator = matches.iterator(); iterator.hasNext(); ) {
+                MatOfDMatch matOfDMatch = (MatOfDMatch) iterator.next();
+                if (matOfDMatch.toArray()[0].distance / matOfDMatch.toArray()[1].distance < 0.9) {
+                    good_matches.add(matOfDMatch.toArray()[0]);
+                }
             }
-        }
 
-        // get keypoint coordinates of good matches to find homography and remove outliers using ransac
-        List<Point> pts1 = new ArrayList<Point>();
-        List<Point> pts2 = new ArrayList<Point>();
-        for(int i = 0; i<good_matches.size(); i++){
-            pts1.add(keypoints1.toList().get(good_matches.get(i).queryIdx).pt);
-            pts2.add(keypoints3.toList().get(good_matches.get(i).trainIdx).pt);
-        }
-
-        // convertion of data types - there is maybe a more beautiful way
-        Mat outputMask = new Mat();
-        MatOfPoint2f pts1Mat = new MatOfPoint2f();
-        pts1Mat.fromList(pts1);
-        MatOfPoint2f pts2Mat = new MatOfPoint2f();
-        pts2Mat.fromList(pts2);
-
-        // Find homography - here just used to perform match filtering with RANSAC, but could be used to e.g. stitch images
-        // the smaller the allowed reprojection error (here 15), the more matches are filtered
-        Mat Homog = Calib3d.findHomography(pts1Mat, pts2Mat, Calib3d.RANSAC, 15, outputMask, 2000, 0.995);
-
-        // outputMask contains zeros and ones indicating which matches are filtered
-        LinkedList<DMatch> better_matches = new LinkedList<DMatch>();
-        for (int i = 0; i < good_matches.size(); i++) {
-            if (outputMask.get(i, 0)[0] != 0.0) {
-                better_matches.add(good_matches.get(i));
+            // get keypoint coordinates of good matches to find homography and remove outliers using ransac
+            List<Point> pts1 = new ArrayList<Point>();
+            List<Point> pts2 = new ArrayList<Point>();
+            for (int i = 0; i < good_matches.size(); i++) {
+                pts1.add(keypoints1.toList().get(good_matches.get(i).queryIdx).pt);
+                pts2.add(keypoints2.toList().get(good_matches.get(i).trainIdx).pt);
             }
-        }
-        MatOfDMatch better_matches_mat = new MatOfDMatch();
-        better_matches_mat.fromList(better_matches);
-        Features2d.drawMatches(img1, keypoints1, img2, keypoints3, better_matches_mat, outputImg, RED, RED, drawnMatches, Features2d.NOT_DRAW_SINGLE_POINTS);
-        Imgproc.resize(outputImg, outputImg, aInputFrame.size());
 
-        return outputImg;
+            // convertion of data types - there is maybe a more beautiful way
+            Mat outputMask = new Mat();
+            MatOfPoint2f pts1Mat = new MatOfPoint2f();
+            pts1Mat.fromList(pts1);
+            MatOfPoint2f pts2Mat = new MatOfPoint2f();
+            pts2Mat.fromList(pts2);
+
+            // Find homography - here just used to perform match filtering with RANSAC, but could be used to e.g. stitch images
+            // the smaller the allowed reprojection error (here 15), the more matches are filtered
+            Mat Homog = Calib3d.findHomography(pts1Mat, pts2Mat, Calib3d.RANSAC, 15, outputMask, 2000, 0.995);
+
+            // outputMask contains zeros and ones indicating which matches are filtered
+            LinkedList<DMatch> better_matches = new LinkedList<DMatch>();
+            for (int i = 0; i < good_matches.size(); i++) {
+                if (outputMask.get(i, 0)[0] != 0.0) {
+                    better_matches.add(good_matches.get(i));
+                }
+            }
+            MatOfDMatch better_matches_mat = new MatOfDMatch();
+            better_matches_mat.fromList(better_matches);
+            Features2d.drawMatches(img1, keypoints1, aInputFrame, keypoints2, better_matches_mat, outputImg, RED, RED, drawnMatches, Features2d.NOT_DRAW_SINGLE_POINTS);
+            Imgproc.resize(outputImg, outputImg, aInputFrame.size());
+            return outputImg;
+
     }
 
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         return recognize(inputFrame.rgba());
-        //return inputFrame.rgba();
     }
 }
